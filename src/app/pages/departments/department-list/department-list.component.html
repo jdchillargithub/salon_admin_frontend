@@ -1,0 +1,100 @@
+<div class="panel-header panel-header-sm"></div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-sm-12">
+              <h5 class="title">Departments</h5>
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="col-sm-5"></div>
+            <div class="col-sm-4 d-flex align-items-center justify-content-end">
+              <div class="input-group no-border mt-2">
+                <input
+                  #searchInput
+                  type="text"
+                  value=""
+                  class="form-control"
+                  placeholder="Search..."
+                  (keypress)="onKeyPress($event)"
+                  (input)="validateToLettersOnly($event)"
+
+                />
+                <div
+                  class="input-group-append"
+                  (click)="getDepartMent(searchInput.value)"
+                >
+                  <div class="input-group-text">
+                    <i class="now-ui-icons ui-1_zoom-bold"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3 d-flex justify-content-end">
+              <button class="btn add" (click)="addDepartment()">
+                Add Department
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div *ngIf="isResp && dataSource" class="table-responsive">
+            <table mat-table [dataSource]="dataSource" class="table">
+              <ng-container matColumnDef="department_id">
+                <th mat-header-cell *matHeaderCellDef>Department Id</th>
+                <td mat-cell *matCellDef="let department">
+                  {{ department.department_id }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="department_name">
+                <th mat-header-cell *matHeaderCellDef>Department Name</th>
+                <td mat-cell *matCellDef="let department">
+                  {{ department.department_name }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let department">
+                  {{ department.status }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let department">                  
+                  <!-- <span class="actionIcons" matTooltip="View" (click)="redirectToClinicDetails(clinic)">
+                    <fa-icon class="actionBtn" [icon]="faEye"></fa-icon>
+                  </span> -->
+                  <span class="actionIcons" matTooltip="Edit" (click)="editDepartment( department.department_id)">
+                    <fa-icon class="actionBtn" [icon]="faPenToSquare"></fa-icon>
+                  </span>
+                  <!-- <span class="actionIcons" matTooltip="Delete" (click)="deleteConfirm( department.department_id)">
+                    <fa-icon class="actionBtn" [icon]="faTrash"></fa-icon>
+                  </span> -->
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr
+                mat-row
+                *matRowDef="let department; columns: displayedColumns"
+              ></tr>
+            </table>
+            <mat-paginator
+              #paginatorDepartments
+              [length]="Tcount"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="pageSizeOptions"
+              (page)="onPageChange($event)"
+              aria-label="Select page"
+              [showFirstLastButtons]="true"
+            >
+            </mat-paginator>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

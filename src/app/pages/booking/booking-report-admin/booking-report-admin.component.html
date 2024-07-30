@@ -1,0 +1,160 @@
+<div class="panel-header panel-header-sm"></div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-sm-12">
+              <h5 class="title">Booking Report</h5>
+            </div>
+          </div>
+          <!-- <div class="row">
+            <div class="col-sm-3">
+              <p class="subTitle">Report</p>
+            </div>
+            <div class="col-sm-9"></div>
+          </div> -->
+          <div class="row align-items-center">
+            <div
+              class="selectDate col-sm-3 d-flex flex-column align-items-center justify-content-center"
+            >
+              <input
+                type="date"
+                [(ngModel)]="selectedStartDate"
+                (change)="getReport('')"
+                class="form-control"
+              />
+              <span class="dateAlert">{{
+                !selectedStartDate ? "Please select start date" : null
+              }}</span>
+            </div>
+            <div
+              class="selectDate col-sm-3 d-flex flex-column align-items-center justify-content-center"
+            >
+              <input
+                type="date"
+                [(ngModel)]="selectedEndDate"
+                (change)="getReport('')"
+                class="form-control"
+              />
+              <span class="dateAlert">{{
+                !selectedEndDate ? "Please select end date" : null
+              }}</span>
+            </div>
+            <!-- <button class="btn add" (click)="addClinic()">Add Clinic</button> -->
+            <div
+              class="doctorSelect col-sm-3 d-flex flex-column justify-content-center"
+            >
+              <select
+                class="form-control"
+                (change)="setType($event.target.value)"
+              >
+                <option value="0" selected>Success Booking</option>
+                <option value="1">Consulted Booking</option>
+                <option value="2">Non Consulted Booking</option>
+              </select>
+            </div>
+            <div class="col-sm-3 d-flex align-items-center justify-content-end">
+              <div class="input-group no-border mt-2">
+                <input
+                  #searchInput
+                  type="text"
+                  value=""
+                  class="form-control"
+                  placeholder="Search..."
+                  (keypress)="onKeyPress($event)"
+                  (input)="validateToLettersAndNumbersOnly($event)"
+                />
+                <div
+                  class="input-group-append"
+                  (click)="getReport(searchInput.value)"
+                >
+                  <div class="input-group-text">
+                    <i class="now-ui-icons ui-1_zoom-bold"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div *ngIf="!bookingsEmpty && dataSource" class="table-responsive">
+            <table
+              *ngIf="!bookingsEmpty && dataSource"
+              mat-table
+              [dataSource]="dataSource"
+              class="table"
+            >
+              <ng-container matColumnDef="bookingId">
+                <th mat-header-cell *matHeaderCellDef>Booking Id</th>
+                <td mat-cell *matCellDef="let booking">
+                  {{ booking.bookingId }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="appointmentDate">
+                <th mat-header-cell *matHeaderCellDef>Appointment Date</th>
+                <td mat-cell *matCellDef="let booking">
+                  {{ booking.appointmentDate }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="patientName">
+                <th mat-header-cell *matHeaderCellDef>Patient Name</th>
+                <td mat-cell *matCellDef="let booking">
+                  {{ booking.patientName }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="bookedPhoneNo">
+                <th mat-header-cell *matHeaderCellDef>Phone No</th>
+                <td mat-cell *matCellDef="let booking">
+                  {{ booking.bookedPhoneNo }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="doctorName">
+                <th mat-header-cell *matHeaderCellDef>Doctor Name</th>
+                <td mat-cell *matCellDef="let booking">
+                  {{ booking.doctorName }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="orderId">
+                <th mat-header-cell *matHeaderCellDef>Order ID</th>
+                <td mat-cell *matCellDef="let booking">
+                  {{ booking.orderId }}
+                </td>
+              </ng-container>
+
+              <!-- <ng-container matColumnDef="bookingStatus">
+                <th mat-header-cell *matHeaderCellDef>Booking Status</th>
+                <td mat-cell *matCellDef="let booking">
+                  {{ booking.bookingStatus }}
+                </td>
+              </ng-container> -->
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+            <!-- Add MatPaginator for pagination -->
+            <mat-paginator
+              #paginatorClinic
+              [length]="Tcount"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="pageSizeOptions"
+              (page)="onPageChange($event)"
+              aria-label="Select page"
+              [showFirstLastButtons]="true"
+            >
+            </mat-paginator>
+          </div>
+          <div *ngIf="bookingsEmpty" class="noDataWarning">
+            <p>No Reports available !</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

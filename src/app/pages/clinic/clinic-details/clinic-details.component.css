@@ -1,0 +1,67 @@
+.doctorsListTitle {
+  color: black;
+  font-weight: bold;
+  font-size: 25px;
+  margin-left: 2%;
+  text-shadow: 2px 2px rgba(0, 0, 0, 0.287);
+  /* border-bottom: 1px solid black; */
+}
+
+.detailLink,
+.detailLink:hover {
+  color: blue;
+  cursor: pointer;
+}
+
+.docCard {
+  background: #154581 !important;
+  /* outline: 1px solid  !important; */
+  padding: 1px !important;
+}
+.cinicInfo {
+  margin: 30px 30px;
+}
+.clinData {
+  font-weight: lighter;
+}
+
+.docDepart {
+  opacity: 70%;
+}
+
+.docImg img {
+  max-height: 10rem;
+  object-fit: contain;
+}
+
+.clinicImgContainer img {
+  max-height: 10rem;
+  object-fit: contain;
+}
+
+th {
+  color: #154581;
+  font-weight: 900 !important;
+  font-size: medium !important;
+}
+.add {
+  float: right !important;
+  background: #154581 !important;
+}
+
+:host
+  ::ng-deep
+  .mat-slide-toggle.mat-checked:not(.mat-disabled)
+  .mat-slide-toggle-bar {
+  background-color: #9999996c;
+}
+
+:host
+  ::ng-deep
+  .mat-slide-toggle.mat-checked:not(.mat-disabled)
+  .mat-slide-toggle-thumb {
+  background-color: #2cd469;
+}
+:host ::ng-deep .mat-slide-toggle:not(.mat-checked) .mat-slide-toggle-thumb {
+  background-color: #f12121;
+}

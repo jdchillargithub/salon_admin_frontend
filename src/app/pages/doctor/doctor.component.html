@@ -1,0 +1,141 @@
+<div class="panel-header panel-header-sm"></div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <!-- <h5 class="title">Doctors</h5>
+          <button class="btn add" (click)="addDoc()">Add Doctor</button> -->
+          <div class="row">
+            <div class="col-sm-12">
+              <h5 class="title">Doctors</h5>
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="col-sm-6"></div>
+            <div class="col-sm-4 d-flex align-items-center justify-content-end">
+              <div class="input-group no-border mt-2">
+                <input
+                  #searchInput
+                  type="text"
+                  value=""
+                  class="form-control"
+                  placeholder="Search..."
+                  (keypress)="onKeyPress($event)"
+                  (input)="validateToLettersAndNumbersOnly($event)"
+                />
+                <div
+                  class="input-group-append"
+                  (click)="getDoctors(searchInput.value)"
+                >
+                  <div class="input-group-text">
+                    <i class="now-ui-icons ui-1_zoom-bold"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-2 d-flex justify-content-end">
+              <button class="btn add" (click)="addDoc()">Add Doctor</button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div *ngIf="isResp" class="table-responsive">
+            <table mat-table [dataSource]="dataSource" class="table">
+              <!-- ID Column -->
+              <ng-container matColumnDef="doctorId">
+                <th mat-header-cell *matHeaderCellDef>ID</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.doctorId }}
+                </td>
+              </ng-container>
+              <!-- Doctor Name Column -->
+              <ng-container matColumnDef="doctorName">
+                <th mat-header-cell *matHeaderCellDef>Doctor Name</th>
+                <td
+                  class="docLink"
+                  mat-cell
+                  *matCellDef="let element"
+                  (click)="docView(element.doctorId)"
+                >
+                  {{ element.doctorName }}
+                </td>
+              </ng-container>
+              <!-- Doctor Phone Column -->
+              <ng-container matColumnDef="doctorPhone">
+                <th mat-header-cell *matHeaderCellDef>Phone</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.doctorPhone }}
+                </td>
+              </ng-container>
+              <!-- Entity Name Column -->
+              <ng-container matColumnDef="entityName">
+                <th mat-header-cell *matHeaderCellDef>Entity</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.entityName }}
+                </td>
+              </ng-container>
+              <!-- Department Name Column -->
+              <ng-container matColumnDef="department">
+                <th mat-header-cell *matHeaderCellDef>Department</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.department }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let doctor">
+                  <mat-slide-toggle
+                    [checked]="doctor.status === 1"
+                    (change)="
+                      handleStatusChange(
+                        doctor.doctorId,
+                        doctor.entityId,
+                        $event.checked ? 1 : 0
+                      )
+                    "
+                  >
+                  </mat-slide-toggle>
+                </td>
+              </ng-container>
+              <!-- Actions Column -->
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let element">
+                  <span
+                    class="actionIcons"
+                    matTooltip="View"
+                    (click)="docView(element.doctorId)"
+                  >
+                    <fa-icon class="actionBtn" [icon]="faEye"></fa-icon>
+                  </span>
+                  <span
+                    class="actionIcons"
+                    matTooltip="Edit"
+                    (click)="editDoc(element.doctorId, element.entityId)"
+                  >
+                    <fa-icon class="actionBtn" [icon]="faPenToSquare"></fa-icon>
+                  </span>
+                </td>
+              </ng-container>
+              <!-- Header and Row Definitions -->
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+            <!-- Add MatPaginator for pagination -->
+            <mat-paginator
+              #paginatorDoctor
+              [length]="Tcount"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="pageSizeOptions"
+              (page)="onPageChange($event)"
+              aria-label="Select page"
+              [showFirstLastButtons]="true"
+            >
+            </mat-paginator>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,100 @@
+<div
+  class="main-content text-center d-flex align-items-center justify-content-center"
+>
+  <div class="row">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="title">Clinic Login</h5>
+      </div>
+      <div class="card-body">
+        <form
+          *ngIf="otpViewFlag === false; else otpFormTemplate"
+          [formGroup]="myForm"
+          (ngSubmit)="onSubmit()"
+        >
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="credentialTitle" for="number">Phone number</label>
+                <input
+                  name="phoneNumber"
+                  id="phone"
+                  type="text"
+                  class="form-control"
+                  placeholder="Phone"
+                  minlength="10"
+                  maxlength="10"
+                  formControlName="phoneNumber"
+                  (input)="onInputChange($event)"
+                  required
+                />
+                <small
+                  *ngIf="
+                    myForm.get('phoneNumber').hasError('required') &&
+                    myForm.get('phoneNumber').touched
+                  "
+                  style="color: red; margin-left: 8px"
+                  >Phone number is required.</small
+                >
+                <small
+                  *ngIf="
+                    myForm.get('phoneNumber').hasError('pattern') &&
+                    myForm.get('phoneNumber').touched
+                  "
+                  style="color: red; margin-left: 8px"
+                  >Please enter a 10-digit phone number</small
+                >
+              </div>
+            </div>
+            <div class="col-md-12 text-center">
+              <button class="btn" type="submit" [disabled]="!myForm.valid">
+                Send OTP
+              </button>
+            </div>
+          </div>
+        </form>
+        <ng-template #otpFormTemplate>
+          <form [formGroup]="otpForm" (ngSubmit)="onOtpSubmit()">
+            <div class="col-md-12">
+              <label class="credentialTitle" for="otp">Enter OTP:</label>
+              <div style="height: 100px;margin-top: 10px;">
+                <ng-otp-input
+                  name="otp"
+                  formControlName="otp"
+                  required
+                  [config]="{ length: 6, allowNumbersOnly: true }"
+                  (onInputChange)="onOtpInputChange($event)"
+                  class="otp-input"
+                ></ng-otp-input>
+              </div>
+              <div class="col-md-12 resendBtn">
+                <button
+                  class="btn btn-sm btn-round"
+                  type="button"
+                  [disabled]="!isTimerEnd"
+                  (click)="resndOtp()"
+                >
+                  Resend OTP ↻
+                </button>
+              </div>
+              <div class="resend-otp">
+                <span *ngIf="timeLeft > 0"
+                  >Time left: {{ timeLeft }} seconds</span
+                >
+              </div>
+              <div class="col-md-12 text-center">
+                <button
+                  type="submit"
+                  class="btn submitBtn"
+                  [disabled]="!otpFilled"
+                >
+                  Submit OTP
+                </button>
+              </div>
+            </div>
+          </form>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

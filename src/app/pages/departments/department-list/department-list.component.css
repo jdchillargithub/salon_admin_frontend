@@ -1,0 +1,13 @@
+th {
+  color: #154581;
+  font-weight: 900 !important;
+  font-size: medium !important;
+}
+.add {
+  float: right !important;
+  background: #154581 !important;
+}
+.actionIcons{
+  margin: 0px 10px;
+}
+

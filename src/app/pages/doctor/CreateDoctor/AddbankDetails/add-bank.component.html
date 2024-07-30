@@ -1,0 +1,137 @@
+<div class="panel-header panel-header-sm"></div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">
+            <a
+              href="javascript:void(0)"
+              (click)="onBack()"
+              matTooltip="Back"
+              matTooltipPosition="above"
+              ><img
+                src="../../../../../assets/img/left-arrow-in-circular-button-black-symbol.png"
+                width="25.12"
+            /></a>
+            Add Bank Details
+          </h5>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="myForm" (submit)="submit()">
+            <div class="row">
+              <div class="col-md-12 pr-1">
+                <div class="form-group">
+                  <label>Account Number</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="account"
+                    placeholder="Account Number"
+                    (input)="onInputChange('account', $event)"
+                  />
+                  <small
+                    *ngIf="
+                      myForm.get('account').hasError('required') &&
+                      myForm.get('account').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Account Number is required.</small
+                  >
+                </div>
+              </div>
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>IFSC code</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="IFSC"
+                    formControlName="ifsc"
+                    maxlength="11"
+                    (input)="validateToLettersAndNumbersOnly('ifsc', $event)"
+                  />
+                  <small
+                    *ngIf="
+                      myForm.get('ifsc').hasError('required') &&
+                      myForm.get('ifsc').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >IFSC is required.</small
+                  >
+                </div>
+              </div>
+              <div class="col-md-6 pl-1">
+                <div class="form-group">
+                  <label for="email">Bank Name</label>
+                  <input
+                    placeholder="Bank Name"
+                    formControlName="bank"
+                    type="text"
+                    class="form-control"
+                    placeholder="Bank Name"
+                    (input)="validateToLettersOnly($event)"
+                  />
+                  <small
+                    *ngIf="
+                      myForm.get('bank').hasError('required') &&
+                      myForm.get('bank').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Bank is required.</small
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>Account Holder Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Account Holder Name"
+                    formControlName="accountHolder"
+                    (input)="validateToLettersOnly($event)"
+                  />
+                  <small
+                    *ngIf="
+                      myForm.get('accountHolder').hasError('required') &&
+                      myForm.get('accountHolder').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Account Holder Name number is required.</small
+                  >
+                </div>
+              </div>
+              <div class="col-md-6 pl-1">
+                <div class="form-group">
+                  <label>UPI ID</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="UPI"
+                    formControlName="upi"
+                    (input)="onInputChange('upi', $event)"
+                  />
+                  <small
+                    *ngIf="
+                      myForm.get('upi').hasError('required') &&
+                      myForm.get('upi').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >UPI is required.</small
+                  >
+                </div>
+              </div>
+            </div>
+
+            <button class="btn" type="submit" [disabled]="!myForm.valid">
+              Create
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

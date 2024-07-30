@@ -1,0 +1,244 @@
+<div class="panel-header panel-header-sm"></div>
+<div class="main-content">
+  <div class="row mt-0 titleOfPage">
+    <div class="card w-100">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-sm-1">
+            <h5 class="title">
+              <a
+                href="javascript:void(0)"
+                (click)="onBack()"
+                matTooltip="Back"
+                matTooltipPosition="above"
+                style="margin-right: 20px"
+                ><img
+                  src="../../../../../assets/img/left-arrow-in-circular-button-black-symbol.png"
+                  width="25.12"
+              /></a>
+            </h5>
+          </div>
+          <div class="col-sm-5 text-align-start">
+            <h5 class="title">{{ docData.doctorName }}</h5>
+          </div>
+          <div class="col-sm-4"></div>
+          <div class="col-sm-2 d-flex justify-content-end">
+            <button *ngIf="!isFromDoc" (click)="goToEdit()" class="btn add">
+              Edit Doctor
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="row no-gutters px-3">
+        <div class="col-sm-4">
+          <div class="img-container docImgContainer">
+            <img
+              [src]="docData.profileImageUrl"
+              class="card-img"
+              alt="Doctor Image"
+            />
+          </div>
+        </div>
+        <div class="col-sm-8 content-col">
+          <div class="card-block px-2 align-items-center">
+            <!-- <h4 class="card-title cinicInfo">
+              <b>{{ docData.entityName }}</b
+              ><br />
+            </h4> -->
+            <h6 class="cinicInfo mt-sm-0" style="font-size: medium">
+              Email:
+              <span class="docDataValues">
+                {{ docData.email ? docData.email : "Doctor@gmail.com" }}</span
+              >
+            </h6>
+            <h6 class="cinicInfo" style="font-size: medium">
+              Phone:
+              <span class="docDataValues"> {{ docData.doctorPhone }}</span>
+            </h6>
+            <h6 class="cinicInfo" style="font-size: medium">
+              Qualification:
+              <span class="docDataValues"> {{ docData.qualification }}</span>
+            </h6>
+            <h6 class="cinicInfo font-italic" style="font-size: medium">
+              <span class="docDataValues" style="font-size: small">
+                {{ docData.description }}</span
+              >
+            </h6>
+            <!-- <h6 class="cinicInfo" style="font-size: medium">
+              Address:
+              <span class="docDataValues">
+                {{ docData.streetName }}, {{ docData.cityName }},
+                {{ docData.district }},
+                {{ docData.state }}
+              </span>
+            </h6> -->
+            <!-- <h6 class="cinicInfo" style="font-size: medium">
+              Pincode: <span class="docDataValues"> {{ docData.pincode }} </span>
+            </h6> -->
+          </div>
+        </div>
+      </div>
+      <div class="row mt-5 px-3" *ngIf="bookingAvailable">
+        <div class="col-sm-7">
+          <p class="doctorsListTitle">Bookings</p>
+        </div>
+        <div class="col-sm-5">
+          <div class="input-group no-border mt-2">
+            <input
+              #searchInput
+              type="text"
+              value=""
+              class="form-control"
+              placeholder="Search..."
+              (keypress)="onKeyPress($event)"
+            />
+            <div
+              class="input-group-append"
+              (click)="getBookings(searchInput.value)"
+            >
+              <div class="input-group-text">
+                <i class="now-ui-icons ui-1_zoom-bold"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="bookingAvailable" class="table-responsive">
+        <table mat-table [dataSource]="dataSource" class="table">
+          <!-- Selection Column -->
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox
+                (change)="$event ? masterToggle() : null"
+                [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                aria-label="Select all bookings"
+                [color]="
+                  selection.hasValue() && isAllSelected() ? 'primary' : ''
+                "
+              >
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let booking">
+              <mat-checkbox
+                (click)="$event.stopPropagation()"
+                (change)="$event ? selection.toggle(booking) : null"
+                [checked]="selection.isSelected(booking)"
+                aria-label="Select booking"
+                [color]="selection.isSelected(booking) ? 'primary' : ''"
+              >
+              </mat-checkbox>
+            </td>
+          </ng-container>
+          <!-- Booking ID Column -->
+          <ng-container matColumnDef="bookingId">
+            <th mat-header-cell *matHeaderCellDef>Booking Id</th>
+            <td mat-cell *matCellDef="let booking">
+              {{ booking.bookingId }}
+            </td>
+          </ng-container>
+
+          <!-- Time Slot Column -->
+          <ng-container matColumnDef="timeSlot">
+            <th mat-header-cell *matHeaderCellDef>Time Slot</th>
+            <td mat-cell *matCellDef="let booking">
+              {{ booking.timeSlot }}
+            </td>
+          </ng-container>
+
+          <!-- Customer Name Column -->
+          <ng-container matColumnDef="customerName">
+            <th mat-header-cell *matHeaderCellDef>Customer Name</th>
+            <td mat-cell *matCellDef="let booking">
+              {{ booking.customerName }}
+            </td>
+          </ng-container>
+
+          <!-- Customer Phone Column -->
+          <ng-container matColumnDef="customerPhone">
+            <th mat-header-cell *matHeaderCellDef>Customer Phone</th>
+            <td mat-cell *matCellDef="let booking">
+              {{ booking.customerPhone }}
+            </td>
+          </ng-container>
+
+          <!-- Booking Status Column -->
+          <!-- <ng-container matColumnDef="bookingStatus">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let booking">
+              <mat-slide-toggle
+                [checked]="booking.bookingStatus === 1"
+                (change)="
+                  handleStatusChange(booking.bookingId, $event.checked ? 1 : 0)
+                "
+              >
+              </mat-slide-toggle>
+            </td>
+          </ng-container> -->
+
+          <!-- Actions Column -->
+          <!-- <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let doctor">
+              <span
+                class="actionIcons"
+                matTooltip="View"
+                (click)="redirectToDoctorDetails(doctor.doctor_id)"
+              >
+                <fa-icon class="actionBtn" [icon]="faEye"></fa-icon>
+              </span>
+              <span
+                class="actionIcons"
+                matTooltip="Edit"
+                (click)="editDoctor(doctor.doctor_id)"
+              >
+                <fa-icon class="actionBtn" [icon]="faPenToSquare"></fa-icon>
+              </span>
+              <span class="actionIcons" matTooltip="Delete" (click)="deleteDoctor(doctor.doctor_id)">
+                <fa-icon class="actionBtn" [icon]="faTrash"></fa-icon>
+              </span>
+            </td>
+          </ng-container> -->
+
+          <!-- Header and Row Definitions -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+        <div class="row justify-content-end">
+          <button
+            *ngIf="selection.hasValue()"
+            mat-raised-button
+            color="primary"
+            (click)="markSelected()"
+            class="btn cancel ms-3"
+          >
+            Cancel Booking
+          </button>
+        </div>
+
+        <mat-paginator
+          #paginatorClinic
+          [length]="Tcount"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="pageSizeOptions"
+          (page)="onPageChange($event)"
+          aria-label="Select page"
+          [showFirstLastButtons]="true"
+        >
+        </mat-paginator>
+      </div>
+      <div class="text-center">
+        <small
+          *ngIf="!bookingAvailable"
+          style="
+            color: red;
+            margin-left: 8px;
+            margin-bottom: 50px;
+            text-align: center;
+          "
+          >No Bookings!</small
+        >
+      </div>
+    </div>
+  </div>
+</div>

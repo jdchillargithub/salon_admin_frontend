@@ -1,0 +1,383 @@
+<div class="panel-header panel-header-sm"></div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">
+            <a
+              href="javascript:void(0)"
+              (click)="onBack()"
+              matTooltip="Back"
+              matTooltipPosition="above"
+              ><img
+                src="../../../../../assets/img/left-arrow-in-circular-button-black-symbol.png"
+                width="25.12"
+            /></a>
+            {{ isEditForm ? "Edit Clinic" : "Create Clinic" }}
+          </h5>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="myForm" (ngSubmit)="submit()">
+            <div class="row">
+              <div class="col-md-6 mt-3 pe-1">
+                <div class="form-group">
+                  <label>Clinic Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Clinic Name"
+                    formControlName="entityName"
+                    minlength="3"
+                    maxlength="15"
+                    (input)="validateToLettersOnly($event)"
+                  />
+                  <small
+                    *ngIf="
+                      myForm.get('entityName').hasError('required') &&
+                      myForm.get('entityName').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Clinic name is required.</small
+                  >
+                  <small
+                    *ngIf="
+                      myForm.get('entityName').hasError('minlength') &&
+                      myForm.get('entityName').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Clinic name should be minimum 3 letters</small
+                  >
+                </div>
+              </div>
+             
+              <div class="col-md-6 mt-3 pe-1">
+                <div class="form-group">
+                  <label>Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    placeholder="email"
+                    formControlName="email"
+                  />
+                  <small
+                    *ngIf="
+                      myForm.get('email').hasError('required') &&
+                      myForm.get('email').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Email is required.</small
+                  >
+                  <small
+                    *ngIf="
+                      myForm.get('email').hasError('email') &&
+                      myForm.get('email').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                  >
+                    Invalid email address.
+                  </small>
+                </div>
+              </div>
+              <div class="col-md-6 mt-3 ps-1">
+                <div class="form-group">
+                  <label>Contact Number</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Contact Number"
+                    formControlName="phone"
+                    minlength="10"
+                    maxlength="10"
+                    (input)="validateToNumbersOnly($event)"
+                  />
+                  <small
+                    *ngIf="
+                      myForm.get('phone').hasError('required') &&
+                      myForm.get('phone').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Phone number is required.</small
+                  >
+                  <small
+                    *ngIf="
+                      myForm.get('phone').hasError('pattern') &&
+                      myForm.get('phone').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Phone number must be at least 10 digits.</small
+                  >
+                </div>
+              </div>
+              <div class="col-md-6 mt-3 ps-1">
+                <div class="form-group">
+                  <label>GST Number</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="GST Number"
+                    formControlName="gst"
+                    maxlength="15"
+                    (input)="validateToLettersAndNumbersOnly($event)"
+                  />
+                  <small
+                    *ngIf="
+                      myForm.get('gst').hasError('required') &&
+                      myForm.get('gst').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >GST Number is required.</small
+                  >
+                  <small
+                    *ngIf="
+                      myForm.get('gst').hasError('pattern') &&
+                      myForm.get('gst').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                  >
+                    Invalid GST Number. Please enter a valid GST Number.
+                    Example: 12ABCDE1234F1Z1.</small
+                  >
+                </div>
+              </div>
+              <div class="col-md-6 mt-3 pe-1">
+                <div class="form-group">
+                  <label>Street Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Street Name"
+                    formControlName="streetName"
+                    minlength="3"
+                    maxlength="15"
+                    (input)="validateToLettersOnly($event)"
+                  />
+                  <small
+                    *ngIf="
+                      myForm.get('streetName').hasError('required') &&
+                      myForm.get('streetName').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Street name is required.</small
+                  >
+                  <small
+                    *ngIf="
+                      myForm.get('streetName').hasError('minlength') &&
+                      myForm.get('streetName').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Street name should have minimum 3 letters</small
+                  >
+                </div>
+              </div>
+              <div class="col-md-6 mt-3 ps-1">
+                <div class="form-group">
+                  <label>City Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="City Name"
+                    formControlName="cityName"
+                    minlength="3"
+                    maxlength="15"
+                    (input)="validateToLettersOnly($event)"
+                  />
+                  <small
+                    *ngIf="
+                      myForm.get('cityName').hasError('required') &&
+                      myForm.get('cityName').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >City name is required.</small
+                  >
+                  <small
+                    *ngIf="
+                      myForm.get('cityName').hasError('minlength') &&
+                      myForm.get('cityName').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >City name should have 3 letters minimum</small
+                  >
+                </div>
+              </div>
+              <div class="col-md-6 mt-3 pe-1">
+                <div class="form-group">
+                  <label>State</label>
+                  <select
+                    class="form-control"
+                    formControlName="stateId"
+                    (change)="getDistrict($event.target.value)"
+                  >
+                    <option value="" selected disabled>
+                      {{ !isEditForm ? "Select State" : clinicData.state }}
+                    </option>
+                    <!-- Populate options dynamically from API -->
+                    <option
+                      *ngFor="let state of states"
+                      [value]="state.stateId"
+                    >
+                      {{ state.stateName }}
+                    </option>
+                  </select>
+                  <small
+                    *ngIf="
+                      myForm.get('stateId').hasError('required') &&
+                      myForm.get('stateId').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                  >
+                    State is required.
+                  </small>
+                </div>
+              </div>
+
+              <div class="col-md-6 mt-3 ps-1">
+                <div class="form-group">
+                  <label>District</label>
+                  <select class="form-control" formControlName="districtId">
+                    <option value="" selected disabled>
+                      {{
+                        !isClinicData ? "Select District" : clinicData.district
+                      }}
+                    </option>
+                    <option
+                      *ngFor="let district of districts"
+                      [ngValue]="district.districtId"
+                    >
+                      {{ district.districtName }}
+                    </option>
+                  </select>
+                  <small
+                    *ngIf="
+                      !myForm.get('stateId').hasError('required') &&
+                      myForm.get('districtId').hasError('required') &&
+                      myForm.get('districtId').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                  >
+                    District is required.
+                  </small>
+                  <small
+                    *ngIf="
+                      myForm.get('stateId').hasError('required') &&
+                      myForm.get('districtId').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                  >
+                    Please Select State
+                  </small>
+                </div>
+              </div>
+              <div class="col-md-6 mt-3 pe-1">
+                <div class="form-group">
+                  <label>Pincode</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Pincode"
+                    formControlName="pincode"
+                    minlength="6"
+                    maxlength="6"
+                    (input)="validateToNumbersOnly($event)"
+                  />
+                  <small
+                    *ngIf="
+                      myForm.get('pincode').hasError('pattern') &&
+                      myForm.get('pincode').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Pincode is required.</small
+                  >
+                </div>
+              </div>
+              <div class="col-md-6 mt-3 pe-1">
+                <div class="form-group">
+                  <label>Description</label>
+                  <textarea
+                    class="form-control"
+                    placeholder="Description"
+                    formControlName="description"
+                    style="border: 1px solid #e3e3e3"
+                    minlength="5"
+                    maxlength="1000"
+                    (input)="validateToLettersOnly($event)"
+                  >
+                  </textarea>
+                  <small
+                    *ngIf="
+                      myForm.get('description').hasError('required') &&
+                      myForm.get('description').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                  >
+                    Description is required.</small
+                  >
+                  <small
+                    *ngIf="
+                      myForm.get('description').hasError('minlength') &&
+                      myForm.get('description').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                  >
+                    Description should have minimum 5 letters.</small
+                  >
+                </div>
+              </div>
+              <div class="col-md-6 mt-3 pe-1">
+                <div class="form-group">
+                  <label for="filesInput">Upload Image</label>
+                  <div class="upload">
+                    <label class="upload-area label">
+                      <input
+                        type="file"
+                        id="filesInput"
+                        formControlName="files"
+                        required
+                        (change)="onFileChange($event)"
+                      />
+                      <span class="upload-button span">
+                        <i class="fas fa-arrow-up i"></i>
+                      </span>
+                    </label>
+                    <p class="p">Choose File</p>
+                    <ul>
+                      <!-- Display selected files -->
+                      <li *ngFor="let file of selectedFiles">
+                        {{ file.name }}
+                        <a
+                          href="javascript:void(0)"
+                          (click)="removeFile(file)"
+                          data-toggle="tooltip"
+                          data-placement="top"
+                          title="Replace"
+                        >
+                          <i class="fa fa-refresh" id="close"></i>
+                        </a>
+                      </li>
+                      <!-- Display entityImage if available -->
+                      <li *ngIf="isClinicData && !isFileChanged">
+                        {{ clinicData.entityImage }}
+                        <!-- Add an option to remove the entityImage -->
+                        <a
+                          href="javascript:void(0)"
+                          data-toggle="tooltip"
+                          data-placement="top"
+                          title="Remove"
+                        >
+                          <i class="fa fa-times" id="close"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="btn mt-3" type="submit" [disabled]="!myForm.valid">
+              {{ isEditForm ? "Update" : "Next" }}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

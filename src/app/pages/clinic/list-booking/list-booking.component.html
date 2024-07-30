@@ -1,0 +1,143 @@
+<div class="panel-header panel-header-sm"></div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Bookings</h5>
+        </div>
+        <div class="card-body">
+          <div class="title row mb-3 align-content-center">
+            <div
+              class="selectDate col-sm-3 d-flex flex-column justify-content-center"
+            >
+              <input
+                type="date"
+                [(ngModel)]="selectedDate"
+                (change)="getBooking()"
+                class="form-control"
+              />
+            </div>
+            <div class="col-sm-4 d-flex flex-column justify-content-center">
+              <span *ngIf="!dateIndicator" class="dateAlert"
+                >Please select date</span
+              >
+            </div>
+            <div class="col-sm-1"></div>
+            <div
+              *ngIf="dateIndicator && !bookingsEmpty"
+              class="doctorSelect col-sm-3 d-flex flex-column justify-content-center"
+            >
+              <select
+                class="form-control"
+                (change)="filterByDoctor($event.target.value)"
+              >
+                <option value="" disabled selected>Select a doctor</option>
+                <option value="View All">View All</option>
+                <option
+                  *ngFor="let doctor of initialDoctorsList"
+                  [value]="doctor"
+                >
+                  {{ doctor }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div *ngIf="!bookingsEmpty && dataSource" class="table-responsive">
+            <table
+              *ngIf="!bookingsEmpty && dataSource"
+              mat-table
+              [dataSource]="dataSource"
+              class="table"
+            >
+              <!-- Sl.No Column -->
+              <ng-container matColumnDef="slno">
+                <th mat-header-cell *matHeaderCellDef>Sl.No</th>
+                <td mat-cell *matCellDef="let booking">
+                  {{ booking.slno }}
+                </td>
+              </ng-container>
+              <!-- Booking ID Column -->
+              <ng-container matColumnDef="bookingId">
+                <th mat-header-cell *matHeaderCellDef>Booking ID</th>
+                <td mat-cell *matCellDef="let booking">
+                  {{ booking.bookingId }}
+                </td>
+              </ng-container>
+              <!-- Time Slot Column -->
+              <ng-container matColumnDef="timeSlot">
+                <th mat-header-cell *matHeaderCellDef>Time Slot</th>
+                <td mat-cell *matCellDef="let booking">
+                  {{ booking.timeSlot }}
+                </td>
+              </ng-container>
+              <!-- Doctor Name Column -->
+              <ng-container matColumnDef="doctorName">
+                <th mat-header-cell *matHeaderCellDef>Doctor Name</th>
+                <td mat-cell *matCellDef="let booking">
+                  {{ booking.doctorName }}
+                </td>
+              </ng-container>
+              <!-- Customer Name Column -->
+              <ng-container matColumnDef="customerName">
+                <th mat-header-cell *matHeaderCellDef>Customer Name</th>
+                <td mat-cell *matCellDef="let booking">
+                  {{ booking.customer.name }}
+                </td>
+              </ng-container>
+              <!-- Customer Phone Column -->
+              <ng-container matColumnDef="customerPhone">
+                <th mat-header-cell *matHeaderCellDef>Customer Phone</th>
+                <td mat-cell *matCellDef="let booking">
+                  {{ booking.customer.phone }}
+                </td>
+              </ng-container>
+              <!-- Booking Status Column -->
+              <ng-container matColumnDef="bookingStatus">
+                <th mat-header-cell *matHeaderCellDef>Booking Status</th>
+                <td mat-cell *matCellDef="let booking">
+                  <select
+                    [(ngModel)]="booking.bookingStatus"
+                    (change)="
+                      onSelectChange($event.target.value, booking.bookingId)
+                    "
+                    [disabled]="booking.bookingStatus == '1'"
+                    [ngClass]="{
+                      'completed-select': booking.bookingStatus == '1'
+                    }"
+                  >
+                    <option value="0">Booked</option>
+                    <option value="1">Completed</option>
+                    <!-- <option [ngValue]="2">Cancelled</option> -->
+                    <!-- <option [ngValue]="3">Processing</option> -->
+                  </select>
+                </td>
+              </ng-container>
+              <!-- Header and Row Definitions -->
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr
+                mat-row
+                *matRowDef="let booking; columns: displayedColumns"
+              ></tr>
+            </table>
+            <mat-paginator
+              *ngIf="dateIndicator"
+              #paginatorListBooking
+              [length]="Tcount"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="pageSizeOptions"
+              (page)="onPageChange($event)"
+              aria-label="Select page"
+              [showFirstLastButtons]="true"
+            >
+            </mat-paginator>
+          </div>
+          <div *ngIf="bookingsEmpty" class="noDataWarning">
+            <p>No Bookings available !</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

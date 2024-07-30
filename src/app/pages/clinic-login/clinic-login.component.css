@@ -1,0 +1,55 @@
+.main-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.card {
+  width: 100%; /* Ensure the card fills the available width */
+  max-width: 400px; /* Set maximum width of the card */
+}
+
+.btn {
+  width: fit-content;
+  background: #154581 !important;
+}
+
+.formWarn {
+  font-size: 10px;
+  color: red;
+  text-align: end;
+}
+
+/* Example custom styles */
+.ng-otp-input {
+  height: 20px;
+}
+
+.resendBtn {
+  cursor: pointer;
+  color: blue;
+}
+
+.otp-input ng-pristine ng-valid ng-touched{
+  margin-top: 50px;
+}
+
+
+.resendBtn.disabled {
+  opacity: 0.6;
+  pointer-events: none; 
+}
+
+.credentialTitle{
+  color: black;
+  font-weight: bold;
+ }
+
+ .resend-otp{
+  margin-top: 10px;
+  margin-bottom: 50px;
+ }
+ .submitBtn{
+  width: 200px;
+ }

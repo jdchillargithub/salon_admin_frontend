@@ -1,0 +1,49 @@
+<div
+  class="main-content text-center d-flex align-items-center justify-content-center"
+>
+  <div class="row">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="title">Login</h5>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="credentialTitle" for="email">Email address</label>
+                <input
+                  name="email"
+                  id="email"
+                  type="email"
+                  class="form-control"
+                  placeholder="Email"
+                  formControlName="email"
+                />
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label  class="credentialTitle">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  placeholder="Password"
+                  formControlName="password"
+                />
+              </div>
+            </div>
+            <div (click)="switchToCLinic()" class="col-md-12 text-center clickToClinic">
+              <p>Login as Clinic</p>
+            </div>
+            <div class="col-md-12 text-center">
+              <button class="btn" type="submit" [disabled]="!myForm.valid">
+                Login
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

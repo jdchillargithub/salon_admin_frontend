@@ -1,0 +1,76 @@
+.typeDisplay{
+  display: none;
+}
+
+
+.gstLabel{
+  margin-right: 20px;
+  font-weight: lighter !important;
+}
+
+
+.btn {
+  float: right !important;
+  background: #154581 !important;
+}
+
+form label {
+  color: black;
+  font-weight: bold;
+  margin-left: 10px;
+}
+.custom-select {
+  /* Add margin-right to move the arrow icon away from the right edge */
+  padding-right: 30px; /* Adjust as needed */
+  background-image: url("../../../../assets/img/arrow-down-sign-to-navigate.png"); /* Replace 'arrow-icon.png' with your arrow icon */
+  background-repeat: no-repeat;
+  -webkit-appearance: none; /* Remove default arrow icon in Chrome/Safari */
+  -moz-appearance: none; /* Remove default arrow icon in Firefox */
+  appearance: none; /* Remove default arrow icon in other browsers */
+}
+
+.upload {
+  color: #154581;
+  position: absolute;
+  // left: 25%;
+  // top: 50%;
+  // transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  .p {
+    font-size: 0.8571 rem;
+    font-weight: 600;
+  }
+
+  .label {
+    cursor: pointer;
+
+    .span {
+      position: relative;
+      width: 30px;
+      height: 30px;
+      border: 1px dashed;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.4s;
+
+      .i {
+        position: absolute;
+        font-size: 25px;
+      }
+
+      &:hover {
+        transform: scale(0.8);
+      }
+    }
+  }
+}
+
+#filesInput {
+  display: none;
+}

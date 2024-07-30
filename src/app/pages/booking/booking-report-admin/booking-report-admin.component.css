@@ -1,0 +1,18 @@
+.dateAlert {
+  color: red;
+  font-size: smaller;
+}
+
+.noDataWarning {
+  color: red;
+  font-size: small;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+th {
+  color: #154581;
+  font-weight: 900 !important;
+  font-size: medium !important;
+}

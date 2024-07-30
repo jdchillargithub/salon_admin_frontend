@@ -1,0 +1,56 @@
+<div class="panel-header panel-header-sm"></div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">
+            <a
+              href="javascript:void(0)"
+              (click)="onBack()"
+              matTooltip="Back"
+              matTooltipPosition="above"
+              ><img
+                src="../../../../../assets/img/left-arrow-in-circular-button-black-symbol.png"
+                width="25.12"
+            /></a>
+            {{ isEditForm ? "Edit Department" : "Add Department" }}
+          </h5>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="myForm" (ngSubmit)="submit()">
+            <div class="row">
+              <div class="col-md-6 mt-3 pe-1">
+                <div class="form-group">
+                  <label>Department Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Deparment Name"
+                    formControlName="department_name"
+                    (input)="validateToLettersOnly($event)"
+                  />
+                  <small
+                    *ngIf="
+                      myForm.get('department_name').hasError('required') &&
+                      myForm.get('department_name').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Department name is required.</small
+                  >
+                </div>
+              </div>
+            </div>
+            <button
+              class="btn mt-3 add"
+              type="submit"
+              [disabled]="!myForm.valid"
+            >
+              {{ isEditForm ? "Update" : "Submit" }}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

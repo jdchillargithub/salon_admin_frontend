@@ -1,0 +1,136 @@
+<div class="panel-header panel-header-sm"></div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-sm-12">
+              <h5 class="title">Clinics</h5>
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="col-sm-6"></div>
+            <div class="col-sm-4 d-flex align-items-center justify-content-end">
+              <div class="input-group no-border mt-2">
+                <input
+                  #searchInput
+                  type="text"
+                  value=""
+                  class="form-control"
+                  placeholder="Search..."
+                  (keypress)="onKeyPress($event)"
+                  (input)="validateToLettersAndNumbersOnly($event)"
+                />
+                <div
+                  class="input-group-append"
+                  (click)="getClinics(searchInput.value)"
+                >
+                  <div class="input-group-text">
+                    <i class="now-ui-icons ui-1_zoom-bold"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-2 d-flex justify-content-end">
+              <button class="btn add" (click)="addClinic()">Add Clinic</button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div *ngIf="isResp" class="table-responsive">
+            <table mat-table [dataSource]="dataSource" class="table">
+              <ng-container matColumnDef="entity_id">
+                <th mat-header-cell *matHeaderCellDef>Clinic Id</th>
+                <td mat-cell *matCellDef="let clinic">
+                  {{ clinic.entity_id }}
+                </td>
+              </ng-container>
+              <!-- Entity Name Column -->
+              <ng-container matColumnDef="entity_name">
+                <th mat-header-cell *matHeaderCellDef>Clinic Name</th>
+                <td class="detailLink" mat-cell (click)="redirectToClinicDetails(clinic.entity_id)" *matCellDef="let clinic">
+                  {{ clinic.entity_name }}
+                </td>
+              </ng-container>
+              <!---               -->
+              <ng-container matColumnDef="phone">
+                <th mat-header-cell *matHeaderCellDef>Phone</th>
+                <td mat-cell *matCellDef="let clinic">
+                  {{ clinic.phone }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="streetName">
+                <th mat-header-cell *matHeaderCellDef>Location</th>
+                <td mat-cell *matCellDef="let clinic">
+                  {{ clinic?.streetName !== "" ? clinic?.streetName : null }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef>Email</th>
+                <td mat-cell *matCellDef="let clinic">
+                  {{ clinic.email }}
+                </td>
+              </ng-container>
+              <!-- Status Column -->
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let clinic">
+                  <mat-slide-toggle
+                    [checked]="clinic.status === 1"
+                    (change)="
+                      handleStatusChange(
+                        clinic.entity_id,
+                        $event.checked ? 1 : 0
+                      )
+                    "
+                  >
+                  </mat-slide-toggle>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let clinic">                  
+                  <span class="actionIcons" matTooltip="View" (click)="redirectToClinicDetails(clinic.entity_id)">
+                    <fa-icon class="actionBtn" [icon]="faEye"></fa-icon>
+                  </span>
+                  <span class="actionIcons" matTooltip="Edit" (click)="editClinic(clinic.entity_id)">
+                    <fa-icon class="actionBtn" [icon]="faPenToSquare"></fa-icon>
+                  </span>
+                  <!-- <span class="actionIcons" matTooltip="Delete" (click)="deleteClinic(clinic)">
+                    <fa-icon class="actionBtn" [icon]="faTrash"></fa-icon>
+                  </span> -->
+                </td>
+              </ng-container>
+              <!-- Image Column -->
+              <!-- <ng-container matColumnDef="imageUrl">
+                <th mat-header-cell *matHeaderCellDef>Image</th>
+                <td mat-cell *matCellDef="let clinic">
+                  <img
+                    [src]="clinic.imageUrl"
+                    alt="Clinic Image"
+                    class="clinic-image"
+                  />
+                </td>
+              </ng-container> -->
+              <!-- Header and Row Definitions -->
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+            <!-- Add MatPaginator for pagination -->
+            <mat-paginator
+              #paginatorClinic
+              [length]="Tcount"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="pageSizeOptions"
+              (page)="onPageChange($event)"
+              aria-label="Select page"
+              [showFirstLastButtons]="true"
+            >
+            </mat-paginator>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+.main-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .card {
+    width: 100%; /* Ensure the card fills the available width */
+    max-width: 400px; /* Set maximum width of the card */
+  }
+  
+ .btn{
+    width: fit-content;
+    background: #154581!important;
+ }
+
+ .clickToClinic{
+  cursor: pointer;
+  color: blue;
+ }
+
+ .credentialTitle{
+  color: black;
+  font-weight: bold;
+ }
+

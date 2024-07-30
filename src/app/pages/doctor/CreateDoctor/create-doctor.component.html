@@ -1,0 +1,482 @@
+<div class="panel-header panel-header-sm"></div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">
+            <a
+              href="javascript:void(0)"
+              (click)="onBack()"
+              matTooltip="Back"
+              matTooltipPosition="above"
+              ><img
+                src="../../../../../assets/img/left-arrow-in-circular-button-black-symbol.png"
+                width="25.12"
+            /></a>
+            Create Doctor
+          </h5>
+          <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8">
+              <div class="input-group no-border mt-2">
+                <input
+                  #searchInput
+                  type="text"
+                  value=""
+                  class="form-control"
+                  maxlength="10"
+                  placeholder="Search using phone number..."
+                  (keypress)="onKeyPress($event)"
+                  (input)="validateToNumbersOnly($event)"
+                />
+                <div
+                  class="input-group-append"
+                  (click)="getDoctorData(searchInput.value)"
+                >
+                  <div class="input-group-text">
+                    <i class="now-ui-icons ui-1_zoom-bold"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-2"></div>
+          </div>
+        </div>
+        <div class="card-body p-3">
+          <form [formGroup]="myForm" (ngSubmit)="submit()">
+            <div class="row">
+              <div [ngClass]="!isFromClinic ? 'col-md-6' : 'typeDisplay'">
+                <div class="form-group">
+                  <label>Business Type</label>
+                  <div>
+                    <label style="font-weight: 400">
+                      <input
+                        type="radio"
+                        value="individual"
+                        formControlName="businessType"
+                        (change)="onRadioChange('individual')"
+                      />
+                      Individual
+                    </label>
+                    <label class="ms-3" style="font-weight: 400">
+                      <input
+                        type="radio"
+                        value="staff"
+                        formControlName="businessType"
+                        (change)="onRadioChange('staff')"
+                      />
+                      Staff
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div
+                *ngIf="selectedOption === 'staff' && !isFromClinic"
+                class="col-md-6"
+              >
+                <div class="form-group">
+                  <label>Clinic</label>
+                  <select
+                    class="form-control custom-select"
+                    id="doctorDesignation"
+                    formControlName="clinic"
+                  >
+                    <option value="" disabled>Select Clinic</option>
+                    <option
+                      *ngFor="let clinic of clinicName"
+                      [value]="clinic.entity_id"
+                    >
+                      {{ clinic.entity_name }}
+                    </option>
+                  </select>
+                  <small
+                    *ngIf="
+                      this.selectedOption !== 'individual' &&
+                      myForm.get('clinic').hasError('required') &&
+                      myForm.get('clinic').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Clinic is required.</small
+                  >
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Doctor Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Doctor Name"
+                    formControlName="doctorName"
+                    minlength="3"
+                    maxlength="15"
+                    (input)="validateToLettersOnly($event)"
+                  />
+                  <small
+                    *ngIf="
+                      myForm.get('doctorName').hasError('required') &&
+                      myForm.get('doctorName').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Name is required.</small
+                  >
+                  <small
+                    *ngIf="
+                      myForm.get('doctorName').hasError('minlength') &&
+                      myForm.get('doctorName').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                  >
+                    Name must be at least 3 characters long.
+                  </small>
+                </div>
+              </div>
+              <div *ngIf="selectedOption === 'individual'" class="col-md-6">
+                <div class="form-group">
+                  <label>Entity Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Entity Name"
+                    formControlName="entityName"
+                    minlength="3"
+                    maxlength="15"
+                    (input)="validateToLettersOnly($event)"
+                  />
+                  <small
+                    *ngIf="
+                      myForm.get('entityName').hasError('required') &&
+                      myForm.get('entityName').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Entity name is required.</small
+                  >
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Booking Type</label>
+                  <select
+                    class="form-control"
+                    formControlName="bookingType"
+                    (change)="onBookingTypeChange($event)"
+                  >
+                    <option value="" disabled>Select Booking Type</option>
+                    <option value="timeSlot">Time Slot</option>
+                    <option value="token">Token</option>
+                  </select>
+                  <small
+                    *ngIf="
+                      myForm.get('bookingType').hasError('required') &&
+                      myForm.get('bookingType').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Booking Type is required.</small
+                  >
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="email">Email address</label>
+                  <input
+                    placeholder="Email"
+                    formControlName="email"
+                    id="email"
+                    type="email"
+                    class="form-control"
+                    placeholder="Email"
+                  />
+                  <small
+                    *ngIf="
+                      myForm.get('email').hasError('required') &&
+                      myForm.get('email').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Email is required.</small
+                  >
+                  <small
+                    *ngIf="myForm.get('email').hasError('pattern')"
+                    style="color: red; margin-left: 8px"
+                    >Invalid email format.</small
+                  >
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Contact Number</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Company"
+                    (input)="restrictToNumbers($event)"
+                    placeholder="Contact Number"
+                    formControlName="phone"
+                  />
+                  <small
+                    *ngIf="
+                      myForm.get('phone').hasError('required') &&
+                      myForm.get('phone').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Phone number is required.</small
+                  >
+                  <small
+                    *ngIf="
+                      myForm.get('phone').hasError('pattern') &&
+                      myForm.get('phone').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Phone number must contain only numbers.</small
+                  >
+                  <small
+                    *ngIf="
+                      myForm.get('phone').hasError('minlength') &&
+                      myForm.get('phone').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Phone number must be at least 10 digits.</small
+                  >
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label *ngIf="isGSTRegistered">GST Number</label>
+                  <label class="gstLabel">If GST Registered</label>
+                  <input type="checkbox" (change)="handleGSTChange()" />
+                  <input
+                    *ngIf="isGSTRegistered"
+                    type="text"
+                    class="form-control"
+                    placeholder="GST Number"
+                    formControlName="gst"
+                    maxlength="15"
+                    (input)="validateToLettersAndNumbersOnly($event)"
+                  />
+                  <small
+                    *ngIf="
+                      myForm.get('gst').hasError('required') &&
+                      myForm.get('gst').touched &&
+                      isGSTRegistered
+                    "
+                    style="color: red; margin-left: 8px"
+                    >GST number is required.</small
+                  >
+                  <small
+                    *ngIf="
+                      myForm.get('gst').hasError('pattern') &&
+                      myForm.get('gst').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Invalid GST Number. Please enter a valid GST Number.
+                    Example: 12ABCDE1234F1Z1.</small
+                  >
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Doctor Qualification</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Doctor qualification"
+                    formControlName="doctorQualification"
+                    minlength="2"
+                    maxlength="50"
+                  />
+                  <small
+                    *ngIf="
+                      myForm.get('doctorQualification').hasError('required') &&
+                      myForm.get('doctorQualification').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Doctor qualification is required.</small
+                  >
+                  <small
+                    *ngIf="
+                      myForm.get('doctorQualification').hasError('minlength') &&
+                      myForm.get('doctorQualification').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                  >
+                    Doctor qualification must be at least 2 characters long.
+                  </small>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Consultation Duration</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Consultation Duration"
+                    formControlName="consultationDuration"
+                    maxlength="2"
+                    (input)="validateToNumbersOnly($event)"
+                  />
+                  <small
+                    *ngIf="
+                      myForm.get('consultationDuration').hasError('required') &&
+                      myForm.get('consultationDuration').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Consultation duration is required.</small
+                  >
+                  <small
+                    *ngIf="
+                      myForm.get('consultationDuration').hasError('pattern') &&
+                      myForm.get('consultationDuration').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Consultation duration should be in minutes.</small
+                  >
+                </div>
+              </div>
+              <div *ngIf="typeSelected" class="col-md-6">
+                <div class="form-group">
+                  <label>Tokens count</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Tokens count"
+                    formControlName="tokensCount"
+                    minlength="1"
+                    maxlength="3"
+                    (input)="validateToNumbersOnly($event)"
+                  />
+                  <small
+                    *ngIf="
+                      myForm.get('tokensCount').hasError('required') &&
+                      myForm.get('tokensCount').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Tokens count is required.</small
+                  >
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Consultation Charge</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Consultation Charge"
+                    formControlName="consultationCharge"
+                    minlength="1"
+                    maxlength="6"
+                    (input)="restrictToNumbersWithDot($event)"
+                  />
+                  <small
+                    *ngIf="
+                      myForm.get('consultationCharge').hasError('required') &&
+                      myForm.get('consultationCharge').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Consultation charge is required.</small
+                  >
+                </div>
+              </div>
+              <div class="col-md-6" *ngIf="originalData.length != 0">
+                <div class="form-group">
+                  <label>Department</label>
+                  <select
+                    class="form-control custom-select"
+                    id="doctorDesignation"
+                    formControlName="department"
+                  >
+                    <option value="" disabled selected>
+                      Select Department
+                    </option>
+                    <option
+                      *ngFor="let department of originalData"
+                      [value]="department.department_id"
+                    >
+                      {{ department.department_name }}
+                    </option>
+                  </select>
+                  <small
+                    *ngIf="
+                      myForm.get('department').hasError('required') &&
+                      myForm.get('department').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Department is required.</small
+                  >
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="filesInput">Profile</label>
+                  <div class="upload mt-5">
+                    <label class="upload-area label">
+                      <input
+                        type="file"
+                        id="filesInput"
+                        formControlName="files"
+                        (change)="onFileChange($event)"
+                      />
+                      <span class="upload-button span">
+                        <i class="fas fa-arrow-up i"></i>
+                      </span>
+                    </label>
+                    <p class="p">Choose File</p>
+                    <ul>
+                      <li *ngFor="let file of selectedFiles">
+                        {{ file.name }}
+                        <a
+                          href="javascript:void(0)"
+                          (click)="removeFile(file)"
+                          data-toggle="tooltip"
+                          data-placement="top"
+                          title="Replace"
+                        >
+                          <i class="fa fa-refresh" id="close"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Description</label>
+                  <textarea
+                    class="form-control"
+                    placeholder="Description"
+                    formControlName="description"
+                    style="border: 1px solid #e3e3e3"
+                    minlength="5"
+                    maxlength="1000"
+                    (input)="validateToLettersOnly($event)"
+                  >
+                  </textarea>
+                  <small
+                    *ngIf="
+                      myForm.get('description').hasError('required') &&
+                      myForm.get('description').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Description is required.</small
+                  >
+                  <small
+                    *ngIf="
+                      myForm.get('description').hasError('minlength') &&
+                      myForm.get('description').touched
+                    "
+                    style="color: red; margin-left: 8px"
+                    >Description should have minimum 5 letters.</small
+                  >
+                </div>
+              </div>
+            </div>
+
+            <button class="btn" type="submit" [disabled]="!myForm.valid">
+              {{ btntext }}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

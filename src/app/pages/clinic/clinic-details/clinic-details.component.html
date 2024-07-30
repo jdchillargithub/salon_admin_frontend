@@ -1,0 +1,285 @@
+<div class="panel-header panel-header-sm"></div>
+<div class="main-content">
+  <div class="row mt-0 titleOfPage">
+    <!-- <div class="card ">
+          <div class="row">
+            <div class="col-sm-4">
+              <img
+                [src]="clinicData.entityImage"
+                class="card-img-top"
+                alt="Doctor Image"
+              />
+            </div>
+            <div class="col-sm-8">
+              <div class="card-body" *ngIf="clinicData">
+                <h4 class="card-title">
+                  <b>{{ clinicData.entityName }}</b
+                  ><br />
+                </h4>
+                <h6 style="font-size: medium">Email: {{ clinicData.email }}</h6>
+                <h6 style="font-size: medium">Phone: {{ clinicData.phone }}</h6>
+                <h6 style="font-size: medium">
+                  Address: {{ clinicData.streetName }},
+                  {{ clinicData.cityName }}, {{ clinicData.district }},
+                  {{ clinicData.state }}
+                </h6>
+                <h6 style="font-size: medium">
+                  Pincode: {{ clinicData.pincode }}
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div> -->
+    <div class="card w-100">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-sm-3">
+            <h5 class="title">
+              <a
+                href="javascript:void(0)"
+                (click)="onBack()"
+                matTooltip="Back"
+                matTooltipPosition="above"
+                ><img
+                  src="../../../../../assets/img/left-arrow-in-circular-button-black-symbol.png"
+                  width="25.12"
+              /></a>
+              {{ clinicData.entityName }}
+            </h5>
+          </div>
+          <div class="col-sm-7"></div>
+          <div class="col-sm-2 d-flex justify-content-end">
+            <button class="btn add" (click)="addDoc()">Add Doctor</button>
+          </div>
+        </div>
+      </div>
+      <div class="row no-gutters px-3">
+        <div class="col-sm-4">
+          <div class="img-container clinicImgContainer">
+            <img
+              [src]="clinicData.entityImage"
+              class="card-img"
+              alt="Doctor Image"
+            />
+          </div>
+        </div>
+        <div class="col-sm-8 content-col">
+          <div class="card-block px-2 align-items-center">
+            <!-- <h4 class="card-title cinicInfo">
+              <b>{{ clinicData.entityName }}</b
+              ><br />
+            </h4> -->
+            <h6 class="cinicInfo mt-sm-0" style="font-size: medium">
+              Email: <span class="clinData"> {{ clinicData.email }}</span>
+            </h6>
+            <h6 class="cinicInfo" style="font-size: medium">
+              Phone: <span class="clinData"> {{ clinicData.phone }}</span>
+            </h6>
+            <h6 class="cinicInfo" style="font-size: medium">
+              Address:
+              <span class="clinData">
+                {{ clinicData.streetName }}, {{ clinicData.cityName }},
+                {{ clinicData.district }},
+                {{ clinicData.state }}
+              </span>
+            </h6>
+            <h6 class="cinicInfo" style="font-size: medium">
+              Pincode: <span class="clinData"> {{ clinicData.pincode }} </span>
+            </h6>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-5 px-3">
+        <p class="doctorsListTitle">Departments</p>
+      </div>
+      <div class="row mt-2 px-3">
+        <ng-container *ngFor="let department of departData; let i = index">
+          <div class="col-sm-2">
+            <div class="docCard text-white py-2 text-center rounded shadow">
+              <span>{{ department }}</span>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <div class="row mt-5 px-3" *ngIf="docAvailable">
+        <div class="col-sm-7">
+          <p class="doctorsListTitle">Doctors</p>
+        </div>
+        <div class="col-sm-5">
+          <div class="input-group no-border mt-2">
+            <input
+              #searchInput
+              type="text"
+              value=""
+              class="form-control"
+              placeholder="Search..."
+              (keypress)="onKeyPress($event)"
+            />
+            <div
+              class="input-group-append"
+              (click)="getClinicDoctors(clinId, searchInput.value)"
+            >
+              <div class="input-group-text">
+                <i class="now-ui-icons ui-1_zoom-bold"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <ng-container *ngFor="let doctor of clinicDoctors">
+          <div class="col-sm-3">
+            <div class="card docCard text-white text-end mb-4 rounded shadow">
+              <div class="card-body">
+                <div class="docImg">
+                  <img
+                    [src]="doctor.profileImageUrl"
+                    class="card-img"
+                    alt="Doctor Image"
+                  />
+                </div>
+                <p class="mt-3">{{ doctor.doctor_name }}</p>
+                <p class="docDepart">{{ doctor.department_name }}</p>
+              </div>
+            </div>
+          </div>
+        </ng-container> -->
+
+      <div *ngIf="docAvailable" class="table-responsive">
+        <table mat-table [dataSource]="dataSource" class="table">
+          <!-- Doctor ID Column -->
+          <ng-container matColumnDef="doctor_id">
+            <th mat-header-cell *matHeaderCellDef>Doctor Id</th>
+            <td mat-cell *matCellDef="let doctor">
+              {{ doctor.doctor_id }}
+            </td>
+          </ng-container>
+
+          <!-- Doctor Name Column -->
+          <ng-container matColumnDef="doctor_name">
+            <th mat-header-cell *matHeaderCellDef>Doctor Name</th>
+            <td
+              class="detailLink"
+              mat-cell
+              (click)="redirectToDoctorDetails(doctor.doctor_id)"
+              *matCellDef="let doctor"
+            >
+              {{ doctor.doctor_name }}
+            </td>
+          </ng-container>
+
+          <!-- Qualification Column -->
+          <ng-container matColumnDef="qualification">
+            <th mat-header-cell *matHeaderCellDef>Qualification</th>
+            <td mat-cell *matCellDef="let doctor">
+              {{ doctor.qualification }}
+            </td>
+          </ng-container>
+
+          <!-- Phone Column -->
+          <ng-container matColumnDef="doctor_phone">
+            <th mat-header-cell *matHeaderCellDef>Phone</th>
+            <td mat-cell *matCellDef="let doctor">
+              {{ doctor.doctor_phone }}
+            </td>
+          </ng-container>
+
+          <!-- Consultation Time Column -->
+          <ng-container matColumnDef="consultation_time">
+            <th mat-header-cell *matHeaderCellDef>Consultation Time</th>
+            <td mat-cell *matCellDef="let doctor">
+              {{ doctor.consultation_time }} mins
+            </td>
+          </ng-container>
+
+          <!-- Consultation Charge Column -->
+          <ng-container matColumnDef="consultation_charge">
+            <th mat-header-cell *matHeaderCellDef>Consultation Charge</th>
+            <td mat-cell *matCellDef="let doctor">
+              {{ doctor.consultation_charge | currency }}
+            </td>
+          </ng-container>
+
+          <!-- Department Name Column -->
+          <ng-container matColumnDef="department_name">
+            <th mat-header-cell *matHeaderCellDef>Department</th>
+            <td mat-cell *matCellDef="let doctor">
+              {{ doctor.department_name }}
+            </td>
+          </ng-container>
+
+          <!-- Entity Name Column -->
+          <!-- <ng-container matColumnDef="entity_name">
+            <th mat-header-cell *matHeaderCellDef>Hospital</th>
+            <td mat-cell *matCellDef="let doctor">
+              {{ doctor.entity_name }}
+            </td>
+          </ng-container> -->
+
+          <!-- Status Column -->
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let doctor">
+              <mat-slide-toggle
+                [checked]="doctor.status === 1"
+                (change)="
+                  handleStatusChange(doctor.doctor_id, $event.checked ? 1 : 0)
+                "
+              >
+              </mat-slide-toggle>
+            </td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <!-- <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let doctor">
+              <span
+                class="actionIcons"
+                matTooltip="View"
+                (click)="redirectToDoctorDetails(doctor.doctor_id)"
+              >
+                <fa-icon class="actionBtn" [icon]="faEye"></fa-icon>
+              </span>
+              <span
+                class="actionIcons"
+                matTooltip="Edit"
+                (click)="editDoctor(doctor.doctor_id)"
+              >
+                <fa-icon class="actionBtn" [icon]="faPenToSquare"></fa-icon>
+              </span>
+              <span class="actionIcons" matTooltip="Delete" (click)="deleteDoctor(doctor.doctor_id)">
+                <fa-icon class="actionBtn" [icon]="faTrash"></fa-icon>
+              </span>
+            </td>
+          </ng-container> -->
+
+          <!-- Header and Row Definitions -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+        <mat-paginator
+          #paginatorClinic
+          [length]="Tcount"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="pageSizeOptions"
+          (page)="onPageChange($event)"
+          aria-label="Select page"
+          [showFirstLastButtons]="true"
+        >
+        </mat-paginator>
+      </div>
+      <div class="text-center">
+        <small
+          *ngIf="!docAvailable"
+          style="
+            color: red;
+            margin-left: 8px;
+            margin-bottom: 50px;
+            text-align: center;
+          "
+          >No doctors available !</small
+        >
+      </div>
+    </div>
+  </div>
+</div>

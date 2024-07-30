@@ -1,0 +1,35 @@
+/* .selectDate {
+  margin-bottom: 50px;
+} */
+
+.selectDate input {
+  margin-left: 5%;
+}
+
+.dateAlert {
+  color: red;
+  font-size: smaller;
+}
+
+.noDataWarning{
+  color: red;
+  font-size: small;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+/* .completed-row {
+  color: green !important;
+} */
+
+.completed-select {
+  color: black !important;
+  background-color: rgb(81, 249, 81); /* Change text color to green for completed rows */
+}
+
+th{
+  color: #154581;
+  font-weight: 900 !important;
+  font-size: medium !important;
+}
