@@ -20,7 +20,8 @@ export class AuthService {
 
   /* UAT LINK */
   // baseURL = "http://139.59.76.214:8081";
-  baseURL = "http://booking.chillarpayments.com:8081";
+  // baseURL = "http://booking.chillarpayments.com:8081";
+  baseURL = "http://booking.chillarpayments.com:8090";
 
   /* NGROK LINK */
   // baseURL = "https://5f77-122-161-24-214.ngrok-free.app"
