@@ -14,6 +14,7 @@ import {
   faEye,
   faPenToSquare,
   faTrash,
+  faCalendarDay,
 } from "@fortawesome/free-solid-svg-icons";
 
 // export interface PeriodicElement {
@@ -36,6 +37,7 @@ export class DoctorsComponent implements OnInit, OnDestroy {
   faEye = faEye;
   faTrash = faTrash;
   faPenToSquare = faPenToSquare;
+  faCalendarDay = faCalendarDay;
 
   displayedColumns: string[] = [
     "doctorId",
@@ -77,10 +79,17 @@ export class DoctorsComponent implements OnInit, OnDestroy {
     }
   }
 
-  docView(id: number) {
+  docView(id: number, entity: number) {
     localStorage.setItem("docId", id.toString());
     localStorage.setItem("source", "doctorList");
+    localStorage.setItem("clinicId", entity.toString());
     this.router.navigate(["doctor-details"]);
+  }
+
+  timeSlotDirect(id: number, entity: number) {
+    localStorage.setItem("docId", id.toString());
+    localStorage.setItem("clinicId", entity.toString());
+    this.router.navigate(["time-slot"]);
   }
 
   validateToLettersAndNumbersOnly(event: Event) {
@@ -128,6 +137,7 @@ export class DoctorsComponent implements OnInit, OnDestroy {
     this.paginator.pageIndex = event.pageIndex;
     this.getDoctors("");
   }
+  
   getDoctors(query: string) {
     let apiUrl = `/api/v1/admin/list-doctors`;
     const pageIndex = this.paginator ? this.paginator.pageIndex : 0;

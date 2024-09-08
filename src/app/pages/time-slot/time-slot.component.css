@@ -1,0 +1,16 @@
+.add {
+  /* float: right !important; */
+  background: #154581 !important;
+}
+.timeInput {
+  width: 90%;
+}
+.slotEmpty {
+  color: red;
+  text-align: center;
+}
+th {
+  color: #154581;
+  font-weight: 900 !important;
+  font-size: medium !important;
+}

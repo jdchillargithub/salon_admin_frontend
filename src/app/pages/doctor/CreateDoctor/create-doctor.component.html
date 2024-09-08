@@ -108,9 +108,9 @@
                     type="text"
                     class="form-control"
                     placeholder="Doctor Name"
-                    formControlName="doctorName"
+                    formControlName="doctorName" 
                     minlength="3"
-                    maxlength="15"
+                    maxlength="50"
                     (input)="validateToLettersOnly($event)"
                   />
                   <small
@@ -141,8 +141,8 @@
                     placeholder="Entity Name"
                     formControlName="entityName"
                     minlength="3"
-                    maxlength="15"
-                    (input)="validateToLettersOnly($event)"
+                    maxlength="100"
+                    (input)="validateToLettersAndSpecialCharactersOnly($event)"
                   />
                   <small
                     *ngIf="
@@ -448,7 +448,6 @@
                     style="border: 1px solid #e3e3e3"
                     minlength="5"
                     maxlength="1000"
-                    (input)="validateToLettersOnly($event)"
                   >
                   </textarea>
                   <small

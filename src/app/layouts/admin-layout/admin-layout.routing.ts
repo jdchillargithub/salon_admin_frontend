@@ -22,6 +22,7 @@ import { BookingReportAdminComponent } from "../../pages/booking/booking-report-
 import { DoctorDetailsComponent } from "../../pages/doctor/doctor-details/doctor-details.component";
 import { EditDoctorComponent } from "../../pages/doctor/edit-doctor/edit-doctor.component";
 import { componentResolver } from "../../services/dataResolver";
+import { TimeSlotComponent } from "../../pages/time-slot/time-slot.component";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "dashboard", component: DashboardComponent },
@@ -46,6 +47,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "edit-department", component: AddDepartmentComponent },
   { path: "booking-reports-admin", component: BookingReportAdminComponent },
   { path: "doctor-details", component: DoctorDetailsComponent },
+  { path: "time-slot", component: TimeSlotComponent },
   {
     path: "doctor-edit",
     component: EditDoctorComponent,

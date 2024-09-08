@@ -1,0 +1,152 @@
+<div class="panel-header panel-header-sm"></div>
+<div class="main-content">
+  <div class="card">
+    <div class="card-header">
+      <h5 class="title">Time Slot</h5>
+    </div>
+    <div class="card-body">
+      <div class="container mt-3">
+        <div class="row">
+          <div class="col-sm-2">
+            <label for="select">Day</label>
+            <select id="select" [(ngModel)]="selectedDay" name="selectDay">
+              <option *ngFor="let day of daysOfWeek" [value]="day">
+                {{ day }}
+              </option>
+            </select>
+          </div>
+          <div class="col-sm-3 px-1">
+            <label for="input">Start Time</label>
+            <input
+              class="timeInput"
+              id="input"
+              type="time"
+              [(ngModel)]="startTime"
+              name="StartTime"
+            />
+          </div>
+          <div class="col-sm-3 px-1">
+            <label for="input">End Time</label>
+            <input
+              class="timeInput"
+              id="input"
+              type="time"
+              [(ngModel)]="endTime"
+              name="endTime"
+            />
+          </div>
+          <div class="col-sm-2">
+            <label for="select">Session</label>
+            <select
+              id="select"
+              name="selectSession"
+              [(ngModel)]="selectedSession"
+            >
+              <option value="Morning">Morning</option>
+              <option value="Evening">Evening</option>
+            </select>
+          </div>
+          <div class="col-sm-2">
+            <button (click)="addWorkSchedule()" class="btn add">
+              Add Slot
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="container mt-3" *ngIf="!isNoSlot">
+        <div *ngIf="isResp && !isNoSlot" class="table-responsive">
+          <table mat-table [dataSource]="dataSource" class="table">
+            <!-- Sl.No Column -->
+            <ng-container matColumnDef="Sl.No">
+              <th mat-header-cell *matHeaderCellDef>Sl.No</th>
+              <td mat-cell *matCellDef="let element; let i = index">
+                {{ i + 1 }}
+              </td>
+            </ng-container>
+
+            <!-- Day Column -->
+            <ng-container matColumnDef="day">
+              <th mat-header-cell *matHeaderCellDef>Day</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.day }}
+              </td>
+            </ng-container>
+
+            <!-- Start Time Column -->
+            <ng-container matColumnDef="startTime">
+              <th mat-header-cell *matHeaderCellDef>Start Time</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.startTime }}
+              </td>
+            </ng-container>
+
+            <!-- End Time Column -->
+            <ng-container matColumnDef="endTime">
+              <th mat-header-cell *matHeaderCellDef>End Time</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.endTime }}
+              </td>
+            </ng-container>
+
+            <!-- Session Column -->
+            <ng-container matColumnDef="session">
+              <th mat-header-cell *matHeaderCellDef>Session</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.session }}
+              </td>
+            </ng-container>
+
+            <!-- Actions Column -->
+            <!-- <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef>Actions</th>
+                  <td mat-cell *matCellDef="let element">
+                    <span
+                      class="actionIcons"
+                      matTooltip="View"
+                      (click)="docView(element.doctorId)"
+                    >
+                      <fa-icon class="actionBtn" [icon]="faEye"></fa-icon>
+                    </span>
+                    <span
+                      class="actionIcons"
+                      matTooltip="Edit"
+                      (click)="editDoc(element.doctorId, element.entityId)"
+                    >
+                      <fa-icon class="actionBtn" [icon]="faPenToSquare"></fa-icon>
+                    </span>
+                    <span
+                      class="actionIcons"
+                      matTooltip="Time slots"
+                      (click)="timeSlotDirect()"
+                    >
+                      <fa-icon class="actionBtn" [icon]="faCalendarDay"></fa-icon>
+                    </span>
+                  </td>
+                </ng-container> -->
+            <!-- Header and Row Definitions -->
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+          <!-- Add MatPaginator for pagination -->
+          <mat-paginator
+            #paginatorDoctor
+            [length]="Tcount"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="pageSizeOptions"
+            (page)="onPageChange($event)"
+            aria-label="Select page"
+            [showFirstLastButtons]="true"
+          >
+          </mat-paginator>
+        </div>
+      </div>
+      <div class="container mt-3" *ngIf="isNoSlot">
+        <div class="row">
+          <div class="col-sm-12 text-center">
+            <span class="slotEmpty">No slots found</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

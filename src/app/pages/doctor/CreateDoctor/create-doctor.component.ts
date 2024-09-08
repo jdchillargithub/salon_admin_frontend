@@ -187,6 +187,16 @@ export class CreateDoctorComponent implements OnInit, OnDestroy {
     }
   }
 
+  validateToLettersAndSpecialCharactersOnly(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const pattern = /^[A-Za-z\s\W_]*$/;
+  
+    if (!pattern.test(input.value)) {
+      input.value = input.value.replace(/[0-9]/g, ""); // Remove numbers
+      input.dispatchEvent(new Event("input"));
+    }
+  }
+
   validateToNumbersOnly(event: Event) {
     const input = event.target as HTMLInputElement;
     const pattern = /^[0-9]*$/;
@@ -233,8 +243,11 @@ export class CreateDoctorComponent implements OnInit, OnDestroy {
     if (selectedValue == "token") {
       this.typeSelected = true;
       tokensCountControl.setValidators([Validators.required]);
+      tokensCountControl.updateValueAndValidity();
     } else {
       this.typeSelected = false;
+      tokensCountControl.setValidators(null);
+      tokensCountControl.updateValueAndValidity();
       // durationCountControl.setValidators([Validators.required]);
     }
   }

@@ -7,6 +7,7 @@ import {
 } from "@angular/common/http";
 import { Observable, Subject, throwError } from "rxjs";
 import { catchError, switchMap, takeUntil, tap } from "rxjs/operators";
+import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: "root",
@@ -21,7 +22,7 @@ export class AuthService {
   /* UAT LINK */
   // baseURL = "http://139.59.76.214:8081";
   // baseURL = "http://booking.chillarpayments.com:8081";
-  baseURL = "http://booking.chillarpayments.com:8090";
+  baseURL = environment.baseURL;
 
   /* NGROK LINK */
   // baseURL = "https://5f77-122-161-24-214.ngrok-free.app"
@@ -46,8 +47,8 @@ export class AuthService {
     return localStorage.getItem("refreshToken");
   }
   SaveTokens(tokendata: any) {
-    localStorage.setItem('accessToken', tokendata.accessToken);
-    localStorage.setItem('refreshToken', tokendata.refreshToken);
+    localStorage.setItem("accessToken", tokendata.accessToken);
+    localStorage.setItem("refreshToken", tokendata.refreshToken);
   }
 
   private getHeaders(): HttpHeaders {

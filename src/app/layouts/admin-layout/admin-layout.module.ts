@@ -38,6 +38,7 @@ import { BookingReportAdminComponent } from "../../pages/booking/booking-report-
 import { DoctorDetailsComponent } from "../../pages/doctor/doctor-details/doctor-details.component";
 import { EditDoctorComponent } from "../../pages/doctor/edit-doctor/edit-doctor.component";
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { TimeSlotComponent } from "../../pages/time-slot/time-slot.component";
 
 @NgModule({
   imports: [
@@ -81,7 +82,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     AddDepartmentComponent,
     BookingReportAdminComponent,
     DoctorDetailsComponent,
-    EditDoctorComponent
+    EditDoctorComponent,
+    TimeSlotComponent
   ],
 })
 export class AdminLayoutModule {}

@@ -56,7 +56,7 @@
                   class="docLink"
                   mat-cell
                   *matCellDef="let element"
-                  (click)="docView(element.doctorId)"
+                  (click)="docView(element.doctorId,element.entityId)"
                 >
                   {{ element.doctorName }}
                 </td>
@@ -115,6 +115,13 @@
                     (click)="editDoc(element.doctorId, element.entityId)"
                   >
                     <fa-icon class="actionBtn" [icon]="faPenToSquare"></fa-icon>
+                  </span>
+                  <span
+                    class="actionIcons"
+                    matTooltip="Time slots"
+                    (click)="timeSlotDirect(element.doctorId, element.entityId)"
+                  >
+                    <fa-icon class="actionBtn" [icon]="faCalendarDay"></fa-icon>
                   </span>
                 </td>
               </ng-container>
