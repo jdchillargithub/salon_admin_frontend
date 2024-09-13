@@ -6,4 +6,6 @@
 export const environment = {
   production: false,
   baseURL : "http://localhost:3003",
+  // baseURL : "https://salon.chillarpayments.com/backend",
 };
+  

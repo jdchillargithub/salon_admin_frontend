@@ -14,13 +14,13 @@ const ADMIN_ROUTES: RouteInfo[] = [
   // { path: '/icons', title: 'User Profile',  icon:'users_circle-08', class: '' },
   {
     path: "/doctors",
-    title: "Doctors",
+    title: "Stylists",
     icon: "design_bullet-list-67",
     class: "",
   },
   {
     path: "/clinic-list",
-    title: "Clinics",
+    title: "Salons",
     icon: "design_bullet-list-67",
     class: "",
   },

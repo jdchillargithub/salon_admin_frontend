@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseURL : "https://booking.chillarpayments.com/uat/backend",
+  baseURL: "http://booking.chillarpayments.com:8090",
 };
